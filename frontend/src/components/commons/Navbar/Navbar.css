@@ -1,0 +1,35 @@
+.navbar-container{
+    background-color: #3458cc;
+    box-shadow: 0px 5px 5px -5px rgb(255, 255, 255);
+    color: white;
+    height: 3.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-width
+{
+    width:96%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo{
+    color:white;
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+.nav-buttons
+{
+    display: flex;
+    gap:1.5rem;
+}
+
+.login-button,
+.signup-button{
+    color:white;
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
