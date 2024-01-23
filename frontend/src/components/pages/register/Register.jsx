@@ -1,50 +1,126 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Register.css';
 import Form from 'react-bootstrap/Form';
 import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import AuthService from '../../../services/AuthService';
+
 
 function Register() {
+
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+    });
+    
+    const Navigate = useNavigate();
+    const [isLoading, setLoading] = useState(false);
+
+    const handleChange = (e) => {
+        e.preventDefault();
+        setFormData({...formData, [e.target.name]: [e.target.value]});
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setLoading(true);
+
+        console.log("authservice=> ", AuthService);
+        AuthService.signUp(formData).then( (res) => {
+            setLoading(false);
+            console.log("check=> ", res.data);
+            Navigate('/');
+        },(err) =>{
+            //console.log("Err =>", err);
+            console.log(err.response.data.message);
+            setLoading(false);
+        });
+
+    }
+
   return (
     <div className='register-wrapper'>
             <div className='register-cont'>
                     <h3 className='register-heading'>Register</h3>
-                    {/* <Form>
-                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Label>Email address</Form.Label>
-                            <Form.Control type="email" placeholder="name@example.com" />
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                            <Form.Label>Example textarea</Form.Label>
-                            <Form.Control as="textarea" rows={3} />
-                        </Form.Group>
-                    </Form> */}
-                    <form class="">
+                    <form onSubmit={handleSubmit} class="">
                         <div class="mb-3">
                             <label class="form-label" for="firstName">First Name</label>
-                            <input placeholder="example" type="text" name="firstName" id="firstName" class="form-control" />
+                            <input 
+                                placeholder="example" 
+                                type="text" 
+                                name="firstName" 
+                                id="firstName" 
+                                class="form-control" 
+                                value={formData.firstName}
+                                onChange={handleChange}
+                            />
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label" for="lastName">Last Name</label>
-                            <input placeholder="example" type="text" name="lastName" id="lastName" class="form-control" />
+                            <input 
+                                placeholder="example" 
+                                type="text" 
+                                name="lastName" 
+                                id="lastName" 
+                                class="form-control"
+                                value={formData.lastName}
+                                onChange={handleChange}
+                             />
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label" for="exampleForm.ControlInput1">Email address</label>
-                            <input placeholder="name@example.com" type="email" id="exampleForm.ControlInput1" class="form-control" />
+                            <input 
+                                placeholder="name@example.com" 
+                                type="email" 
+                                name="email"
+                                id="exampleForm.ControlInput1" 
+                                class="form-control" 
+                                value={formData.email}
+                                onChange={handleChange}
+                            />
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label" for="password">Password</label>
-                            <input placeholder="password" type="password" name="password" id="password" class="form-control" />
+                            <input 
+                                placeholder="password" 
+                                type="password" 
+                                name="password" 
+                                id="password" 
+                                class="form-control"
+                                value={formData.password}
+                                onChange={handleChange}
+                             />
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label" for="confirmpassword">Confirm Password</label>
-                            <input placeholder="password" type="password" name="confirmpassword" id="confirmpassword" class="form-control" />
+                            <input 
+                                placeholder="password" 
+                                type="password" 
+                                name="confirmPassword" 
+                                id="confirmpassword" 
+                                class="form-control"
+                                value={formData.confirmPassword}
+                                onChange={handleChange}
+                             />
                         </div>
 
-                        <button className='register-btn' type="submit">Register</button>
+                        {
+                            isLoading? 
+                            (
+                                <div className="spinner"></div>
+                            ):
+                            (
+                                <button className='register-btn' type="submit">Register</button>
+                            )
+                        }
+                        
                         <br/>
                         <hr />
                         <div>
