@@ -26,11 +26,12 @@ const userSchema = new mongoose.Schema(
             enum: ["Admin", "Member"],
             required: true,
           },
-        // token: {
-        //     type: String,
-        // },
+        token: {
+            type: String,
+        },
     },
     { timestamps: true }
+    // { collection: 'user' }
 );
 
 module.exports = mongoose.model("user", userSchema);

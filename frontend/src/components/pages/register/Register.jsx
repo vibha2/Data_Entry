@@ -21,7 +21,7 @@ function Register() {
 
     const handleChange = (e) => {
         e.preventDefault();
-        setFormData({...formData, [e.target.name]: [e.target.value]});
+        setFormData({...formData, [e.target.name]: e.target.value});
     }
 
     const handleSubmit = (e) => {
@@ -111,7 +111,8 @@ function Register() {
                              />
                         </div>
 
-                        {
+                        <button className='register-btn' type="submit">Register</button>
+                        {/* {
                             isLoading? 
                             (
                                 <div className="spinner"></div>
@@ -120,7 +121,7 @@ function Register() {
                                 <button className='register-btn' type="submit">Register</button>
                             )
                         }
-                        
+                         */}
                         <br/>
                         <hr />
                         <div>
