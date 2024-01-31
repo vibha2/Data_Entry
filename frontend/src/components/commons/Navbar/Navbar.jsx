@@ -1,15 +1,29 @@
 import React, { useState,useEffect } from 'react';
 import './Navbar.css';
 import { Link } from "react-router-dom";
+import AuthService from "../../../services/AuthService";
 
 
 function NavbarComponent(props) {
 
   const [user, setUser] = useState(props.user);
   const [isLoggedIn, setLoggedIn] = useState(false);
+  const [userData, setUserData] = useState();
 
   useEffect(()=> {
     toSetUser();
+    if(props.user)
+    {
+      AuthService.getUserById(props.user).then(
+        (res) => {
+          console.log("res=> ", res.data.user);
+          setUserData(res.data.user);
+        },
+        (err) => {
+          console.log("err=> ",err);
+        }
+      )
+    }
 
   }, [props.user])
 
@@ -43,6 +57,9 @@ function NavbarComponent(props) {
           isLoggedIn?
           (
             <>
+            <p className='userProfile' >
+              { userData?.firstName[0].toUpperCase() + " " + userData?.lastName[0].toUpperCase() }
+            </p>
             <button onClick={handleLogout} className='logout-button'>
               Logout
             </button>

@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-
+//signup controller
 exports.signUp = async(req, res) => {
     try{
         const { firstName, lastName, email, password, confirmPassword } = req.body;
@@ -149,3 +149,36 @@ exports.login = async(req, res) => {
    }
 
 };
+
+//getUser details by id
+exports.getUserById = async(req, res) => {
+    try{
+        //fetch the userid
+        const userId = req.params.userId;
+        console.log("userid ", userId)
+
+        // check if user is in db or not
+        const user = await User.findById(userId);
+
+        if(!user)
+        {
+            return res.status(403).json({
+                success: false,
+                message: "User is not regitered by this id"
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "User data fetched successfully",
+            user
+        });
+
+    } 
+    catch(error)
+    {
+        res.status(500).send("Error in fetching user details");
+        console.log("error=> ", error)
+    }
+}
+
