@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import AuthService from '../../../services/AuthService';
+import { toast } from "react-hot-toast";
 
 
 function Register() {
@@ -32,10 +33,12 @@ function Register() {
         AuthService.signUp(formData).then( (res) => {
             setLoading(false);
             console.log("check=> ", res.data);
+            toast.success("User Registered Successfully");
             Navigate('/');
         },(err) =>{
             //console.log("Err =>", err);
             console.log(err.response.data.message);
+            toast.error("User not registered");
             setLoading(false);
         });
 

@@ -14,18 +14,33 @@ const authRoutes = require('./routes/auth');
 //PORT declaration
 const PORT = process.env.PORT || 4000;
 
-//database connect
-database.connect();
+
 
 
 
 //middlewares
 app.use(express.json());
+const fileupload = require("express-fileupload");
+//using this fileupload middleware, we can upload our files in db
+app.use(fileupload({
+    useTempFiles: true,
+    tempFileDir: '/tmp/'
+}));
+
+//database connect
+database.connect();
+
+//connect with cloudinary
+const cloudinary = require("./config/cloudinary");
+cloudinary.cloudinaryConnect();
 
 app.use(cors());
 
 //routes
 app.use('/api/v1', authRoutes);
+
+const Upload = require("./routes/fileUpload");
+app.use('/api/v1/upload', Upload);
 
 
 //default route

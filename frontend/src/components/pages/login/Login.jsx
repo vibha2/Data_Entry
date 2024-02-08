@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import './Login.css';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 import  AuthService  from '../../../services/AuthService';
+
 
 function Login() {
 
@@ -25,7 +27,21 @@ function Login() {
       (res) => {
         console.log("response after login=> ", res);
         localStorage.setItem("logged-in-user", res.data.user._id);
-        navigate(`/home/${res.data?.user?._id}`);
+        localStorage.setItem('isAuthenticated', true); // Set authentication flag
+        
+        if(res.data?.user?.accountType !== "Admin")
+        {
+          localStorage.setItem('userRole', "Member"); // Set user role
+          toast.success("Logged in successfully");
+          navigate('/user');
+        }
+        else
+        {
+          localStorage.setItem('userRole', "Admin"); // Set user role
+          toast.success("Logged in successfully");
+          navigate('/admin');
+        }
+        // navigate(`/home/${res.data?.user?._id}`);
 
       },
       (err) => {

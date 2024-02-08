@@ -1,5 +1,7 @@
 import './App.css';
 import React, { useEffect, useState } from "react";
+// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import NavbarComponent from '../src/components/commons/Navbar/Navbar';
 import HomePage from '../src/components/pages/HomePage/HomePage.jsx';
@@ -8,6 +10,8 @@ import Login from '../src/components/pages/login/Login.jsx';
 import Signup from '../src/components/pages/register/Register.jsx';
 import Footer from '../src/components/commons/Footer/Footer.jsx';
 import UserHome from './components/pages/UserHome/UserHome.jsx';
+import AdminHome from './components/pages/AdminHome/AdminHome.jsx';
+import PrivateRoute from './components/pages/PrivateRoute/PrivateRoute.jsx';
 
 function App() {
 
@@ -38,7 +42,14 @@ function App() {
       <NavbarComponent user={user} />
       <Routes>
         <Route path="/" element={<HomePage/>} />
-        <Route path="/home/:userId" element={<UserHome />} />
+        {/* <Route path="/home/:userId" element={<UserHome />} /> */}
+       
+        {/* <PrivateRoute path="/user" roles={["Member"]}  element={<UserHome />} />
+        <PrivateRoute path="/admin" roles={["Admin"]}  element={<AdminHome />} /> */}
+
+        <Route path="/user" element={<UserHome />} />
+        <Route path="/admin"  element={<AdminHome />} />
+
         <Route path="/list" element={<AllData/>} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup/>} />
