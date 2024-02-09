@@ -45,7 +45,7 @@ exports.signUp = async(req, res) => {
             lastName,
             email,
             password: hashedPassword,
-            accountType: "Admin",
+            accountType: "Member",
         })
 
         console.log("signup user=> ",user);
