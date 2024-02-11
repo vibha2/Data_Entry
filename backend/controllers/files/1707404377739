@@ -1,0 +1,2 @@
+useTempFiles: true,
+tempFileDir: '/tmp/

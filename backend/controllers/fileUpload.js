@@ -67,7 +67,7 @@ exports.imageUpload = async(req,res) => {
             fileName,
             tags,
             email,
-            imageUrl: response.secure_url
+            imageFile: response.secure_url
         })
 
         res.json({

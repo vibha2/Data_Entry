@@ -15,13 +15,16 @@ exports.itemDataUpload = async(req,res) => {
     try{
         const { itemName, itemPrice, itemType, itemMode } = req.body;
         console.log("check=> ",itemName, itemPrice, itemType, itemMode )
-
-        const file = req.files.imageFile;
+       
+        console.log("req file=> ",req);
+        // const file = req.body.imageFile;
+        const file = req.files?.imageFile;
         console.log("file is here=> ", file);
 
         //validation
         const supportedTypes = ["jpg", "jpeg", "png"];
         const fileType = file.name.split('.')[1];
+        // const fileType = file.split('.')[1];
         console.log("filetype=> ", fileType);
 
         if(!isFileTypeupported(fileType, supportedTypes)){
@@ -41,8 +44,9 @@ exports.itemDataUpload = async(req,res) => {
             itemName,
             itemPrice,
             itemType,
+            imageFile: response.secure_url,
             itemMode,
-            imageUrl: response.secure_url
+            
         })
 
         
@@ -69,7 +73,7 @@ exports.getAllItem = async(req, res) => {
         const itemData = await Item.find({});
         console.log("itemData=> ", itemData);
 
-        return res.status(200).status({
+        return res.status(200).json({
             success: true,
             message: "Item Data fetched successfully",
             itemData

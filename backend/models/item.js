@@ -16,13 +16,13 @@ const itemSchema = new mongoose.Schema(
             enum: ['fruits', 'vegetable', 'clothes', 'electronics', 'utensils'],
             required: true
         },
-        imageUrl: {
+        imageFile: {
             type: String,
             required: true,
         },
         itemMode: {
             type: String,
-            enum: ['Online', 'Offline'],
+            enum: ['Online-Mode', 'Offline-Mode'],
             required: true,
         }
     },
